@@ -9,6 +9,9 @@ if (!localStorage.getItem('listaDespesas')) {
 var listaDespesas = JSON.parse(localStorage.getItem('listaDespesas'));
 
 
+
+
+
 function verificarDespesa() {
 
     var despesa = document.getElementById("ttbDespesa").value;
@@ -30,6 +33,16 @@ function verificarDespesa() {
 
 function exibirTotal() {
 
+    if (listaDespesas.length == 0) {
+
+        divExibir.innerHTML = "<h2>Total: Nenhum registro encontrado</h2>";
+
+        document.body.appendChild(divExibir);
+
+        return;
+
+    }
+
     var total = 0;
 
     listaDespesas.forEach(despesa => {
@@ -46,6 +59,16 @@ function exibirTotal() {
 
 
 function exibirMedia() {
+
+    if (listaDespesas.length == 0) {
+
+        divExibir.innerHTML = "<h2>Média: Nenhum registro encontrado</h2>";
+
+        document.body.appendChild(divExibir);
+
+        return;
+
+    }
 
     var total = 0;
 
@@ -64,7 +87,47 @@ function exibirMedia() {
 }
 
 
+function exibirDespesaMaisAlta() {
+
+    if (listaDespesas.length == 0) {
+
+        divExibir.innerHTML = "<h2>Despesa mais alta: Nenhum registro encontrado</h2>";
+
+        document.body.appendChild(divExibir);
+
+        return;
+
+    }
+
+    var maior = 0;
+
+    listaDespesas.forEach(despesa => {
+
+        if (maior < despesa) {
+
+            maior = despesa;
+
+        }
+    });
+
+    divExibir.innerHTML = "<h2>Despesa mais alta: " + maior + "</h2>";
+
+    document.body.appendChild(divExibir);
+
+}
+
+
 function exibirLista() {
+
+    if (listaDespesas.length == 0) {
+
+        divExibir.innerHTML = "<table><tr><th>Despesas</th></tr><tr><td>Nenhum registro encontrado</td></tr></table>";
+
+        document.body.appendChild(divExibir);
+
+        return;
+
+    }
 
     var htmlInterno = "<table><tr><th>Despesas</th></tr>";
 
@@ -77,6 +140,18 @@ function exibirLista() {
     htmlInterno += "</table>";
 
     divExibir.innerHTML = htmlInterno;
+
+    document.body.appendChild(divExibir);
+
+}
+
+function apagarDespesas() {
+
+    localStorage.setItem('listaDespesas', '[]');
+
+    listaDespesas = [];
+
+    divExibir.innerHTML = "";
 
     document.body.appendChild(divExibir);
 

@@ -1,10 +1,12 @@
 const formulario = document.querySelector("form");
 
+const divExibir = document.createElement("div");
+
 if (!localStorage.getItem('listaDespesas')) {
     localStorage.setItem('listaDespesas', '[]');
 }
 
-listaDespesas = JSON.parse(localStorage.getItem('listaDespesas'));
+var listaDespesas = JSON.parse(localStorage.getItem('listaDespesas'));
 
 
 function verificarDespesa() {
@@ -25,6 +27,41 @@ function verificarDespesa() {
 
 }
 
+function exibirTotal() {
+
+    var total = 0;
+
+    listaDespesas.forEach(despesa => {
+        
+        total += despesa;
+
+    });
+
+    divExibir.innerHTML = "<h2>Total: " + total + "</h2>";
+
+    document.body.appendChild(divExibir);
+
+}
+
+function exibirLista() {
+
+    var htmlInterno = "<table><tr><th>Despesas</th></tr>";
+
+    listaDespesas.forEach(despesa => {
+        
+        htmlInterno += "<tr><td>" + despesa + "</td></tr>";
+
+    });
+
+    htmlInterno += "</table>";
+
+    divExibir.innerHTML = htmlInterno;
+
+    document.body.appendChild(divExibir);
+
+}
+
+
 formulario.addEventListener("submit", function(e) {
 
     const despesa = verificarDespesa();
@@ -35,6 +72,8 @@ formulario.addEventListener("submit", function(e) {
 
         localStorage.setItem('listaDespesas', JSON.stringify(listaDespesas));
 
+    } else {
+        e.preventDefault();
     }
 
 })

@@ -27,6 +27,7 @@ function verificarDespesa() {
 
 }
 
+
 function exibirTotal() {
 
     var total = 0;
@@ -42,6 +43,26 @@ function exibirTotal() {
     document.body.appendChild(divExibir);
 
 }
+
+
+function exibirMedia() {
+
+    var total = 0;
+
+    listaDespesas.forEach(despesa => {
+        
+        total += despesa;
+
+    });
+
+    var media = total / listaDespesas.length;
+
+    divExibir.innerHTML = "<h2>Média: " + media + "</h2>";
+
+    document.body.appendChild(divExibir);
+
+}
+
 
 function exibirLista() {
 

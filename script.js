@@ -121,7 +121,7 @@ function exibirLista() {
 
     if (listaDespesas.length == 0) {
 
-        divExibir.innerHTML = "<table><tr><th>Despesas</th></tr><tr><td>Nenhum registro encontrado</td></tr></table>";
+        divExibir.innerHTML = "<table><tr><th>Despesas</th></tr> <tr><td>Nenhum registro encontrado</td></tr></table>";
 
         document.body.appendChild(divExibir);
 
@@ -131,9 +131,9 @@ function exibirLista() {
 
     var htmlInterno = "<table><tr><th>Despesas</th></tr>";
 
-    listaDespesas.forEach(despesa => {
+    listaDespesas.forEach((despesa, indice) => {
         
-        htmlInterno += "<tr><td>" + despesa + "</td></tr>";
+        htmlInterno += "<tr><td>" + despesa + "</td> <td><button onclick='apagarDespesa(" + indice + ")'>Excluir</button></td></tr>";
 
     });
 
@@ -144,6 +144,18 @@ function exibirLista() {
     document.body.appendChild(divExibir);
 
 }
+
+
+function apagarDespesa(indice) {
+
+    listaDespesas.splice(indice, 1);
+
+    localStorage.setItem('listaDespesas', JSON.stringify(listaDespesas));
+
+    exibirLista();
+
+}
+
 
 function apagarDespesas() {
 
@@ -160,6 +172,8 @@ function apagarDespesas() {
 
 formulario.addEventListener("submit", function(e) {
 
+    e.preventDefault();
+
     const despesa = verificarDespesa();
     
     if (despesa) {
@@ -168,8 +182,12 @@ formulario.addEventListener("submit", function(e) {
 
         localStorage.setItem('listaDespesas', JSON.stringify(listaDespesas));
 
-    } else {
-        e.preventDefault();
+        formulario.reset();
+
+        divExibir.innerHTML = "";
+
+        document.body.appendChild(divExibir);
+
     }
 
 })

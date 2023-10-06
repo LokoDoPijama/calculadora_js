@@ -46,7 +46,7 @@ function verificarDespesa() {
 
     var despesa = document.getElementById("ttbDespesa").value;
 
-    if (Number(despesa) < 0.01 || isNaN(Number(despesa)) || despesa.length > 30 || despesa[despesa.length - 1] == '.') {
+    if (Number(despesa) < 0.01 || isNaN(Number(despesa)) || despesa.length > 15 || despesa[despesa.length - 1] == '.') {
 
         alert("Por favor inserir um valor de despesa válido");
 
@@ -123,7 +123,7 @@ function exibirDespesaMaisAlta() {
 
     if (listaDespesas.length == 0) {
 
-        divExibir.innerHTML = "<h2>Despesa mais alta: Nenhum registro encontrado</h2>";
+        divExibir.innerHTML = "<h2 class='text-center'>Despesa mais alta: Nenhum registro encontrado</h2>";
 
         bg.appendChild(divExibir);
 

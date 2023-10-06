@@ -16,9 +16,15 @@ divExibir.setAttribute('class', 'mt-5 d-flex justify-content-center');
 
 function formatarValor(valor) {
 
+    valor = Number(valor);
+
     if (String(valor).includes(".")) {
 
         valorSplit = String(valor).split(".");
+
+        if (valorSplit[0] === '') {
+            valorSplit[0] = '0';
+        }
 
         if (valorSplit[1].length == 1) {
             valorSplit[1] += "0";
@@ -41,7 +47,7 @@ function verificarDespesa() {
 
     var despesa = document.getElementById("ttbDespesa").value;
 
-    if (Number(despesa) <= 0 || isNaN(Number(despesa)) || despesa.length > 30) {
+    if (Number(despesa) < 0.01 || isNaN(Number(despesa)) || despesa.length > 30) {
 
         alert("Por favor inserir um valor de despesa válido");
 
@@ -191,9 +197,7 @@ function apagarDespesas() {
 
     listaDespesas = [];
 
-    divExibir.innerHTML = "";
-
-    bg.appendChild(divExibir);
+    bg.removeChild(divExibir);
 
 }
 
@@ -214,9 +218,7 @@ formulario.addEventListener("submit", function(e) {
 
         formulario.reset();
 
-        divExibir.innerHTML = "";
-
-        bg.appendChild(divExibir);
+        bg.removeChild(divExibir);
 
     }
 

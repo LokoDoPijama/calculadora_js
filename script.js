@@ -10,7 +10,6 @@ if (!localStorage.getItem('listaDespesas')) {
 
 var listaDespesas = JSON.parse(localStorage.getItem('listaDespesas'));
 
-
 divExibir.setAttribute('class', 'mt-5 d-flex justify-content-center');
 
 
@@ -47,7 +46,7 @@ function verificarDespesa() {
 
     var despesa = document.getElementById("ttbDespesa").value;
 
-    if (Number(despesa) < 0.01 || isNaN(Number(despesa)) || despesa.length > 30) {
+    if (Number(despesa) < 0.01 || isNaN(Number(despesa)) || despesa.length > 30 || despesa[despesa.length - 1] == '.') {
 
         alert("Por favor inserir um valor de despesa válido");
 

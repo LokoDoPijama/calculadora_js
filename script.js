@@ -121,7 +121,7 @@ function exibirDespesaMaisAlta() {
 
 function exibirLista() {
 
-    var htmlInterno = "<table class='table table-dark table-bordered text-center'><tr><th>Despesas</th><th></th></tr>";
+    var htmlInterno = "<table id='tabela' class='table table-dark table-bordered text-center'><tr><th>Despesas</th><th></th></tr>";
 
     if (listaDespesas.length == 0) {
 
@@ -134,8 +134,24 @@ function exibirLista() {
     }
 
     listaDespesas.forEach((despesa, indice) => {
+
+        console.log(typeof(despesa));
+
+        if (!String(despesa).includes('.')) {
+
+            despesa = despesa + ".00";
+
+        } else {
+
+            despesa = String(despesa);
+
+            despesaSplit = despesa.split('.');
+
+            despesa = despesaSplit[0] + "." + despesaSplit[1].slice(0, 2);
+
+        }
         
-        htmlInterno += "<tr><td>" + despesa + "</td> <td><button class='btn btn-danger btn-sm' onclick='apagarDespesa(" + indice + ")'>Excluir</button></td></tr>";
+        htmlInterno += "<tr><td>R$ " + despesa + "</td> <td><button class='btn btn-danger btn-sm' onclick='apagarDespesa(" + indice + ")'>Excluir</button></td></tr>";
 
     });
 

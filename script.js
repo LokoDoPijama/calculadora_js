@@ -2,6 +2,8 @@ const formulario = document.querySelector("form");
 
 const divExibir = document.createElement("div");
 
+const bg = document.querySelector(".bg");
+
 if (!localStorage.getItem('listaDespesas')) {
     localStorage.setItem('listaDespesas', '[]');
 }
@@ -9,7 +11,7 @@ if (!localStorage.getItem('listaDespesas')) {
 var listaDespesas = JSON.parse(localStorage.getItem('listaDespesas'));
 
 
-
+divExibir.setAttribute('class', 'mt-5 d-flex justify-content-center');
 
 
 function verificarDespesa() {
@@ -37,7 +39,7 @@ function exibirTotal() {
 
         divExibir.innerHTML = "<h2>Total: Nenhum registro encontrado</h2>";
 
-        document.body.appendChild(divExibir);
+        bg.appendChild(divExibir);
 
         return;
 
@@ -53,7 +55,7 @@ function exibirTotal() {
 
     divExibir.innerHTML = "<h2>Total: " + total + "</h2>";
 
-    document.body.appendChild(divExibir);
+    bg.appendChild(divExibir);
 
 }
 
@@ -64,7 +66,7 @@ function exibirMedia() {
 
         divExibir.innerHTML = "<h2>Média: Nenhum registro encontrado</h2>";
 
-        document.body.appendChild(divExibir);
+        bg.appendChild(divExibir);
 
         return;
 
@@ -82,7 +84,7 @@ function exibirMedia() {
 
     divExibir.innerHTML = "<h2>Média: " + media + "</h2>";
 
-    document.body.appendChild(divExibir);
+    bg.appendChild(divExibir);
 
 }
 
@@ -93,7 +95,7 @@ function exibirDespesaMaisAlta() {
 
         divExibir.innerHTML = "<h2>Despesa mais alta: Nenhum registro encontrado</h2>";
 
-        document.body.appendChild(divExibir);
+        bg.appendChild(divExibir);
 
         return;
 
@@ -112,28 +114,28 @@ function exibirDespesaMaisAlta() {
 
     divExibir.innerHTML = "<h2>Despesa mais alta: " + maior + "</h2>";
 
-    document.body.appendChild(divExibir);
+    bg.appendChild(divExibir);
 
 }
 
 
 function exibirLista() {
 
+    var htmlInterno = "<table class='table table-dark table-bordered text-center'><tr><th>Despesas</th><th></th></tr>";
+
     if (listaDespesas.length == 0) {
 
-        divExibir.innerHTML = "<table><tr><th>Despesas</th></tr> <tr><td>Nenhum registro encontrado</td></tr></table>";
+        divExibir.innerHTML = htmlInterno + " <tr><td>Nenhum registro encontrado</td><td></td></tr></table>";
 
-        document.body.appendChild(divExibir);
+        bg.appendChild(divExibir);
 
         return;
 
     }
 
-    var htmlInterno = "<table><tr><th>Despesas</th></tr>";
-
     listaDespesas.forEach((despesa, indice) => {
         
-        htmlInterno += "<tr><td>" + despesa + "</td> <td><button onclick='apagarDespesa(" + indice + ")'>Excluir</button></td></tr>";
+        htmlInterno += "<tr><td>" + despesa + "</td> <td><button class='btn btn-danger btn-sm' onclick='apagarDespesa(" + indice + ")'>Excluir</button></td></tr>";
 
     });
 
@@ -141,7 +143,8 @@ function exibirLista() {
 
     divExibir.innerHTML = htmlInterno;
 
-    document.body.appendChild(divExibir);
+    bg.appendChild(divExibir);
+    
 
 }
 
@@ -165,7 +168,7 @@ function apagarDespesas() {
 
     divExibir.innerHTML = "";
 
-    document.body.appendChild(divExibir);
+    bg.appendChild(divExibir);
 
 }
 
@@ -186,7 +189,7 @@ formulario.addEventListener("submit", function(e) {
 
         divExibir.innerHTML = "";
 
-        document.body.appendChild(divExibir);
+        bg.appendChild(divExibir);
 
     }
 

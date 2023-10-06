@@ -14,13 +14,34 @@ var listaDespesas = JSON.parse(localStorage.getItem('listaDespesas'));
 divExibir.setAttribute('class', 'mt-5 d-flex justify-content-center');
 
 
+function formatarValor(valor) {
+
+    if (String(valor).includes(".")) {
+
+        valorSplit = String(valor).split(".");
+
+        if (valorSplit[1].length == 1) {
+            valorSplit[1] += "0";
+        }
+
+        valor = valorSplit[0] + "." + valorSplit[1].slice(0, 2);
+
+    } else {
+
+        valor += ".00";
+
+    }
+
+    return valor;
+
+}
+
+
 function verificarDespesa() {
 
     var despesa = document.getElementById("ttbDespesa").value;
 
-    despesa = Number(despesa);
-
-    if (despesa <= 0 || isNaN(despesa)) {
+    if (Number(despesa) <= 0 || isNaN(Number(despesa)) || despesa.length > 30) {
 
         alert("Por favor inserir um valor de despesa válido");
 
@@ -49,11 +70,13 @@ function exibirTotal() {
 
     listaDespesas.forEach(despesa => {
         
-        total += despesa;
+        total += Number(despesa);
 
     });
 
-    divExibir.innerHTML = "<h2>Total: " + total + "</h2>";
+    total = formatarValor(total);
+
+    divExibir.innerHTML = "<h2>Total: R$ " + total + "</h2>";
 
     bg.appendChild(divExibir);
 
@@ -76,13 +99,15 @@ function exibirMedia() {
 
     listaDespesas.forEach(despesa => {
         
-        total += despesa;
+        total += Number(despesa);
 
     });
 
     var media = total / listaDespesas.length;
 
-    divExibir.innerHTML = "<h2>Média: " + media + "</h2>";
+    media = formatarValor(media);
+
+    divExibir.innerHTML = "<h2>Média:  R$ " + media + "</h2>";
 
     bg.appendChild(divExibir);
 
@@ -105,14 +130,14 @@ function exibirDespesaMaisAlta() {
 
     listaDespesas.forEach(despesa => {
 
-        if (maior < despesa) {
+        if (Number(maior) < Number(despesa)) {
 
             maior = despesa;
 
         }
     });
 
-    divExibir.innerHTML = "<h2>Despesa mais alta: " + maior + "</h2>";
+    divExibir.innerHTML = "<h2>Despesa mais alta: R$ " + maior + "</h2>";
 
     bg.appendChild(divExibir);
 
@@ -134,22 +159,6 @@ function exibirLista() {
     }
 
     listaDespesas.forEach((despesa, indice) => {
-
-        console.log(typeof(despesa));
-
-        if (!String(despesa).includes('.')) {
-
-            despesa = despesa + ".00";
-
-        } else {
-
-            despesa = String(despesa);
-
-            despesaSplit = despesa.split('.');
-
-            despesa = despesaSplit[0] + "." + despesaSplit[1].slice(0, 2);
-
-        }
         
         htmlInterno += "<tr><td>R$ " + despesa + "</td> <td><button class='btn btn-danger btn-sm' onclick='apagarDespesa(" + indice + ")'>Excluir</button></td></tr>";
 
@@ -193,9 +202,11 @@ formulario.addEventListener("submit", function(e) {
 
     e.preventDefault();
 
-    const despesa = verificarDespesa();
+    var despesa = verificarDespesa();
     
     if (despesa) {
+
+        despesa = formatarValor(despesa);
 
         listaDespesas.push(despesa);
 
